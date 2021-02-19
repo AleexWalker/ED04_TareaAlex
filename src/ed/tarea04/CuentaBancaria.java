@@ -7,6 +7,7 @@ package ed.tarea04;
  * @version 11.20
  */
 
+
 public class CuentaBancaria {
     // atributos de instancia
     private String titular;
@@ -14,6 +15,87 @@ public class CuentaBancaria {
     private String entidad;
     private String oficina;
     private String numCuenta;
+
+    /**
+     * getter del atributo titular
+     * @return devuelve el valor asignado a titular
+     */
+    public String getTitular() {
+        return titular;
+    }
+
+    /**
+     * Setter mediante el cual podemos cambiar/asignar valores al parámetro titular
+     * @param titular parámetro titular de la cuenta
+     */
+    public void setTitular(String titular) {
+        this.titular = titular;
+    }
+
+    /**
+     * getter del atributo saldo que nos dirá la cantidad almacenada en saldo
+     * @return devolverá el saldo en dicho momento
+     */
+    public double getSaldo() {
+        return saldo;
+    }
+
+    /**
+     * Setter mediante el cual podremos cambiar/asignar valores al parámetro saldo
+     * @param saldo
+     */
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
+    /**
+     * método mediante el cual obtendremos el valor de Entidad (en este caso los 4 dígitos)
+     * @return nos devuelve un código de 4 cifras que en este caso se tratará de la entidad bancaria
+     */
+    public String getEntidad() {
+        return entidad;
+    }
+
+    /**
+     * Método para asignar un valor a entidad
+     * @param entidad Entidad bancaria la cual estará formada por 4 dígitos
+     */
+    public void setEntidad(String entidad) {
+        this.entidad = entidad;
+    }
+
+    /**
+     *
+     * @return meétodo que nos devolverá el valor asignado a oficina
+     */
+    public String getOficina() {
+        return oficina;
+    }
+
+    /**
+     * método que nos permitirá modificar el código de 4 cífras de oficina
+     * @param oficina Oficina bancaria la cual estará constituida por 4 dígitos
+     */
+    public void setOficina(String oficina) {
+        this.oficina = oficina;
+    }
+
+    /**
+     *
+     * @return devolverá el número de la cuenta en su integridad (10 dígitos)
+     */
+    public String getNumCuenta() {
+        return numCuenta;
+    }
+
+    /**
+     *
+     * @param numCuenta parámetro que que contendrá el numero de cuenta, constituido por (4 dígitos de entidad + 4 dígitos de oficina + 2 dígitos de control)
+     */
+    public void setNumCuenta(String numCuenta) {
+        this.numCuenta = numCuenta;
+    }
+
 
     // atributos de clase
     private static final int TAM_MAX = 100;
@@ -36,11 +118,11 @@ public class CuentaBancaria {
             throw new IllegalArgumentException("El número de cuenta no es válido.");
 
         // llegados a este punto, todos los parámetros de entrada son correctos, por lo que procedemos a incluirlos en el objeto
-        this.titular = titular;
-        this.entidad = entidad;
-        this.oficina = oficina;
-        this.numCuenta = numCuenta;
-        saldo = 0;
+        this.setTitular(titular);
+        this.setEntidad(entidad);
+        this.setOficina(oficina);
+        this.setNumCuenta(numCuenta);
+        setSaldo(0);
     }
 
     /**
@@ -60,7 +142,7 @@ public class CuentaBancaria {
      */
     public void ingresar (double cantidad) {
         if (cantidad>=0)
-            saldo = saldo + cantidad;
+            setSaldo(getSaldo() + cantidad);
         else
             throw new IllegalArgumentException("No es posible realizar la operación. La cantidad a ingresar debe ser un número positivo. ");
     }
@@ -72,8 +154,8 @@ public class CuentaBancaria {
      */
     public void retirar (double cantidad) {
         if (cantidad>=0)
-            if (cantidad <= saldo)
-                saldo = saldo - cantidad;
+            if (cantidad <= getSaldo())
+                setSaldo(getSaldo() - cantidad);
             else
                 throw new IllegalArgumentException("No es posible realizar la operación. El saldo es inferior a la cantidad a retirar. ");
         else
@@ -136,13 +218,13 @@ public class CuentaBancaria {
     public String toString() {
         String DC;
 
-        DC = obtenerDigitosControl(this.entidad, this.oficina, this.numCuenta);
+        DC = obtenerDigitosControl(this.getEntidad(), this.getOficina(), this.getNumCuenta());
 
-        return  "Titular: " + this.titular + " \n" +
-                "Entidad: " + this.entidad + " \n" +
-                "Oficina: " + this.oficina + " \n" +
+        return  "Titular: " + this.getTitular() + " \n" +
+                "Entidad: " + this.getEntidad() + " \n" +
+                "Oficina: " + this.getOficina() + " \n" +
                 "DC: " + DC + " \n" +
-                "Número de cuenta: " + this.numCuenta + " \n" +
-                "Saldo: "+ this.saldo;
+                "Número de cuenta: " + this.getNumCuenta() + " \n" +
+                "Saldo: "+ this.getSaldo();
     }
 }
